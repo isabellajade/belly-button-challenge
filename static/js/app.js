@@ -77,6 +77,7 @@ let buildChart = (selectedID) => {
 
 }
 
+// var mydata = {'Ram':'100 points','Shyam':'200 points','Fred-ii':'800 points'};
 
 let buildBubble = (selectID) => {
     var filteredData1 = data.samples.filter(row => row.id == selectID)[0]
