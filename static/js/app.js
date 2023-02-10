@@ -39,7 +39,7 @@ let buildChart = (selectedID) => {
             }
         ]
         let layout = {
-            title: "title"
+            title: "Top 10 OTUs Found"
         }
         let config = {
             responsive: true
@@ -64,7 +64,7 @@ let buildChart = (selectedID) => {
         var data = [trace1];
 
         var layout1 = {
-            title: 'Marker Size',
+            title: 'Samples Found',
             showlegend: false
         };
 
