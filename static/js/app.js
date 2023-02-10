@@ -73,15 +73,34 @@ let buildChart = (selectedID) => {
         }
 
         Plotly.newPlot('bubble', data, layout1, config1)
+
+        filteredData[0]
+        console.log(selectedID)
+        console.log(resp.metadata[selectedID])
+
+        console.log(resp.names.indexOf(selectedID))
+
+        console.log(resp.metadata[resp.names.indexOf(selectedID)])
+        
+        var metaData = resp.metadata[resp.names.indexOf(selectedID)]
+
+        let panel = d3.select("#sample-metadata")
+        panel.html("")
+
+        for (key in metaData) {
+            panel.append("h6").text(`${key.toUpperCase()}: ${metaData[key]}`)
+        }
     });
 
 }
-
-// var mydata = {'Ram':'100 points','Shyam':'200 points','Fred-ii':'800 points'};
 
 let buildBubble = (selectID) => {
     var filteredData1 = data.samples.filter(row => row.id == selectID)[0]
     let y1 = filteredData1.sample_values
     let x1 = filteredData1.otu_ids
     let hoverText1 = filteredData1.otu_labels
+}
+
+function buildMetadata(sample) {
+
 }
