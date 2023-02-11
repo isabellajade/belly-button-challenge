@@ -1,4 +1,5 @@
 var data;
+// calling in data
 d3.json("https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1/14-Interactive-Web-Visualizations/02-Homework/samples.json").then((resp) => {
     console.log(resp)
     data = resp
@@ -8,15 +9,16 @@ d3.json("https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1
     })
     buildChart(resp.names[0])
 })
-
+// option change function
 function optionChanged(selectedID) {
     buildChart(selectedID)
 }
-
+// building the bar chart
 let buildChart = (selectedID) => {
     d3.json("https://2u-data-curriculum-team.s3.amazonaws.com/dataviz-classroom/v1.1/14-Interactive-Web-Visualizations/02-Homework/samples.json").then((resp) => {
         console.log(resp)
         data = resp
+        // selecting the dropdown
         let dropDown = d3.select("#selDataset")
         resp.names.forEach((name) => {
             dropDown.append("option").text(name)
@@ -24,11 +26,12 @@ let buildChart = (selectedID) => {
         if (!data) {
             return
         }
+        // setting variables for chart
         var filteredData = data.samples.filter(row => row.id == selectedID)[0]
         let x = filteredData.sample_values.slice(0, 10).reverse()
         let y = filteredData.otu_ids.slice(0, 10).map(id => "OTU " + id).reverse()
         let hoverText = filteredData.otu_labels.slice(0, 10).reverse()
-
+        // bar chart data
         let barData = [
             {
                 x: x,
@@ -44,10 +47,10 @@ let buildChart = (selectedID) => {
         let config = {
             responsive: true
         }
-
+        // plotting bar chart data
         Plotly.newPlot("bar", barData, layout, config)
 
-            // bubble chart
+        // building bubble chart
             
         let trace1 = {
             x: filteredData.otu_ids,
@@ -71,22 +74,16 @@ let buildChart = (selectedID) => {
         let config1 = {
             responsive: true
         }
-
+        // plotting bubble chart
         Plotly.newPlot('bubble', data, layout1, config1)
 
         filteredData[0]
-        console.log(selectedID)
-        console.log(resp.metadata[selectedID])
-
-        console.log(resp.names.indexOf(selectedID))
-
-        console.log(resp.metadata[resp.names.indexOf(selectedID)])
         
         var metaData = resp.metadata[resp.names.indexOf(selectedID)]
-
+        // selecting demographic info spot with d3
         let panel = d3.select("#sample-metadata")
         panel.html("")
-
+        // adding demographic data
         for (key in metaData) {
             panel.append("h6").text(`${key.toUpperCase()}: ${metaData[key]}`)
         }
